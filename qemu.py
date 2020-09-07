@@ -7,7 +7,7 @@ import tkinter as tk
 # QEMU路径
 root = Tk()
 root.withdraw()
-qemu路径 = askdirectory(title = "选择QUEMU主文件夹")
+qemu路径 = askdirectory(title = "选择QEMU主文件夹")
 qemu路径 = qemu路径.replace("/","\\")
 
 
@@ -47,7 +47,7 @@ temp = input()
 
 
 # 内存设置
-print("内存大小(M)")
+print("内存大小(M)\n注：如果设置内存小于256M可能无法正常运行！")
 temp = input()
 内存 = int(temp)
 
