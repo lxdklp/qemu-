@@ -15,6 +15,9 @@ before run this project, you should configure the environment like this.
 
 - Make sure you are already installed Python and will recommend you to install the version 3.x.
 
+
+>"所有版本"Just save all versions
+
 ---
 
 <div id="cn"></div>
@@ -33,3 +36,6 @@ before run this project, you should configure the environment like this.
 - 确保你安装Windows版QEMU
 
 - 确保已经安装并配置了Python。我们建议您使用3.x版本。
+
+
+>"所有版本"仅做储存所有版本
