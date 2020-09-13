@@ -18,6 +18,8 @@ before run this project, you should configure the environment like this.
 
 >"所有版本"Just save all versions
 
+~~Google Translate~~
+
 ---
 
 <div id="cn"></div>
