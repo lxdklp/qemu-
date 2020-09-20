@@ -1,1 +1,1 @@
-https://github.com/lxdklp/qemu-cmd-generator/raw/master/%E6%89%80%E6%9C%89%E7%89%88%E6%9C%AC/qemu%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90%E5%99%A81.1.0.py
+https://github.com/lxdklp/qemu-cmd-generator/raw/master/%E6%89%80%E6%9C%89%E7%89%88%E6%9C%AC/qemu%E5%90%AF%E5%8A%A8%E6%8C%87%E4%BB%A4%E7%94%9F%E6%88%90%E5%99%A81.2.0.py
