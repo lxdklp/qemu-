@@ -4,19 +4,57 @@ from tkinter import *
 import tkinter.messagebox
 from tkinter.filedialog import askopenfilename, askopenfilenames, asksaveasfilename, askdirectory
 import tkinter as tk
+import struct
+import time
+import requests
 
 
-# 检测操作系统类型
+# 检测操作系统
 系统 = os.name
 if 系统 == "nt":
     后辍 = ".bat"
 if 系统 == "posix":
     后辍 = ".sh"
 
+位数 = struct.calcsize("P")
+if 位数 == 4:
+    qemuurl = "https://qemu.weilnetz.de/w32/qemu-w32-setup-20200814.exe"
+if 位数 == 8:
+    qemuurl = "https://qemu.weilnetz.de/w64/qemu-w64-setup-20200814.exe"
 
-# QEMU路径
+
+# 提示弹窗
 root = Tk()
 root.withdraw()
+tkinter.messagebox.showinfo(title = "QEMU启动指令生成器", message = "推荐使用管理员模式运行")  
+
+
+# 下载QEMU
+print("[1]下载QEMU(仅Windows,QEMU5.1.0) [2]选择QEMU主文件夹")
+temp = input()
+选择 = int(temp)
+
+if 选择 == 1:
+    开始 = time.time()
+    大小 = 0
+    下载路径 =  askdirectory(title = "选择QEMU下载位置")
+    下载路径 = (下载路径 + "qemu.exe")
+    response = requests.get(qemuurl , stream = True)
+    块大小 = 1024
+    文件大小 = int(response.headers['content-length'])
+    print("文件大小："+str(round(float(文件大小/块大小/1024),4))+"[MB]")
+    with open(下载路径 , 'wb') as file:
+        for data in response.iter_content(chunk_size = 块大小):
+            file.write(data)
+            大小 = len(data) + 大小
+            print("\r" + "已下载:" + int(大小 / 文件大小 * 100) * "█" + " [" + str(round(大小/块大小/1024,2)) + "MB]" + "[" + str(round(float(大小 / 文件大小) * 100 , 2)) + "%" + "]" , end = "")
+    结束 = time.time()
+    print("耗时:" + str(结束 - 开始) + "s")
+    tkinter.messagebox.showinfo(title= "安装QEMU" , message = "请按照提示安装QEMU")  
+    os.system(下载路径 + "\\" + "qemu.exe")
+
+
+# QEMU路径
 qemu路径 = askdirectory(title = "选择QEMU主文件夹")
 qemu路径 = qemu路径.replace("/","\\")
 qemu路径 = ('"' + qemu路径 + '"')
@@ -24,7 +62,7 @@ print(qemu路径)
 
 
 while 1:
-    print("[0]关于 [1]生成虚拟硬盘 [2]生成启动文件 [3]退出")
+    print("[0]关于 [1]硬盘工具 [2]生成启动文件 [3]退出")
     temp = input()
     选择 = int(temp)
 
@@ -36,43 +74,53 @@ while 1:
         print("bilibili@楼下的苦力怕")
         print("gayhun:https://github.com/lxdklp     bilibili:https://space.bilibili.com/489752882")
         print("项目地址:https://github.com/lxdklp/qemu-cmd-generator")
+        print("哔哩哔哩(゜-゜)つロ干杯~-bilibili")
 
 
-    # 生成虚拟硬盘
     if 选择 == 1:
-        # 格式设定
-        print("[1]raw(原始的磁盘镜像格式) [2]qcow2(QEMU目前推荐的QEMU镜像格式) [3]qcow(较旧的QEMU镜像格式) [4]cow(用户模式LinuxCopy-On-Write的镜像文件格式) [5]vdi(兼容VirtualBox1.1的镜像文件格式) [6]vmdk(兼容VMware 4以上的镜像文件格式) [7]vpc(兼容Virtual PC的镜像文件格式)")
+        print("[1]生成虚拟硬盘 [2]查看虚拟磁盘信息")
         temp = input()
-        格式 = int(temp)
-        if 格式 == 1:
-            格式 = "raw"
-        if 格式 == 2:
-            格式 = "qcow2"
-        if 格式 == 3:
-            格式 = "qcow"
-        if 格式 == 4:
-            格式 = "cow"
-        if 格式 == 5:
-            格式 = "vdi"
-        if 格式 == 6:
-            格式 = "vmdk"
-        if 格式 == 7:
-            格式 = "vpc"
+        硬盘工具选择 = int(temp)
+        print(硬盘工具选择)
 
-        # 容量设定
-        print("硬盘容量(GB)")
-        容量 = input()
+        # 生成虚拟硬盘
+        if 硬盘工具选择 == 1:
+            # 格式设定
+            print("[1]raw(原始的磁盘镜像格式) [2]qcow2(QEMU目前推荐的QEMU镜像格式) [3]qcow(较旧的QEMU镜像格式) [4]cow(用户模式LinuxCopy-On-Write的镜像文件格式) [5]vdi(兼容VirtualBox1.1的镜像文件格式) [6]vmdk(兼容VMware 4以上的镜像文件格式) [7]vpc(兼容Virtual PC的镜像文件格式)")
+            temp = input()
+            格式 = int(temp)
+            if 格式 == 1:
+                格式 = "raw"
+            if 格式 == 2:
+                格式 = "qcow2"
+            if 格式 == 3:
+                格式 = "qcow"
+            if 格式 == 4:
+                格式 = "cow"
+            if 格式 == 5:
+                格式 = "vdi"
+            if 格式 == 6:
+                格式 = "vmdk"
+            if 格式 == 7:
+                格式 = "vpc"
+            # 容量设定
+            print("硬盘容量(GB)")
+            容量 = input()
+            # 保存
+            生成 = input("虚拟硬盘名称:")
+            生成路径 = askdirectory(title = "选择保存位置")
+            生成路径 = 生成路径.replace("/","\\")
+            生成路径 = ('"' + 生成路径 + '"')
+            print(生成路径)
+            # 执行指令
+            指令 = (qemu路径 + "qemu-img create -f " + 格式 + 容量 + "G" + 生成路径)
+            os.system(指令)
 
-        # 保存
-        生成 = input("虚拟硬盘名称:")
-        生成路径 = askdirectory(title = "选择保存位置")
-        生成路径 = 生成路径.replace("/","\\")
-        生成路径 = ('"' + 生成路径 + '"')
-        print(生成路径)
-
-        # 执行指令
-        指令 = (qemu路径 + "qemu-img create -f " + 格式 + 容量 + "G" + 生成路径)
-        os.system(指令)
+        # 查看磁盘信息
+        if 硬盘工具选择 == 2:
+            硬盘路径 = askopenfilename(title = "选择虚拟硬盘")
+            指令 = (qemu路径 + "qemu-img info " + 硬盘路径)
+            os.system(指令)
 
 
     # 生成启动文件
@@ -86,9 +134,15 @@ while 1:
 
         # CPU设置
         print("CPU构架")
-        print("[1]x86 [2]arm")
+        print("[0]自定义 [1]x86 [2]arm")
         temp = input()
         构架 = int(temp)
+        if 构架 == 0:
+            print("请输入(可在QEMU主文件夹找到,假设为qemu-system-aarch64.exe请输入qemu-system-aarch64")
+            构架 = input()
+            print("输入CPU型号(可使用-cpu查询支持)")
+            型号 = input()
+
         if 构架 == 1:
             构架 = "qemu-system-x86_64"
             print("CPU型号")
