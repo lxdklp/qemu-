@@ -7,6 +7,7 @@ import tkinter as tk
 import struct
 import time
 import requests
+import linecache
 
 
 # 检测操作系统
@@ -27,6 +28,50 @@ if 位数 == 8:
 root = Tk()
 root.withdraw()
 tkinter.messagebox.showinfo(title = "QEMU启动指令生成器", message = "推荐使用管理员模式运行")  
+
+
+# 检查更新
+
+更新 = ("https://github.com/lxdklp/qemu-cmd-generator/raw/master/%E7%89%88%E6%9C%AC.txt")
+更新 = requests.get(更新)
+open(".\更新.txt" ,  "wb").write(更新.content)
+
+
+
+版本 = linecache.getline(".\更新.txt" , 1)
+版本 = int(版本)
+更新 = linecache.getline(".\更新.txt" , 2)
+os.remove("更新.txt")
+
+if 版本 == 140:
+    print("程序已是最新版!")
+
+else:
+    print("此程序不是最新版!是否下载最新版?")
+    print("[1]是 [2]不是")
+    temp = input()
+    选择 = int(temp)
+    if 选择 == 1:
+        print("请输入下载文件名称")
+        名称 = input()
+        下载路径 =  askdirectory(title = "选择保存位置")
+        下载路径 = (下载路径 + 名称 + ".py")
+        开始 = time.time()
+        大小 = 0
+        response = requests.get(更新 , stream = True)
+        块大小 = 1024
+        文件大小 = int(response.headers['content-length'])
+        print("文件大小："+str(round(float(文件大小/块大小/1024),4))+"[MB]")
+        with open(下载路径 , 'wb') as file:
+            for data in response.iter_content(chunk_size = 块大小):
+                file.write(data)
+                大小 = len(data) + 大小
+                print("\r" + "已下载:" + int(大小 / 文件大小 * 100) * "█" + " [" + str(round(大小/块大小/1024,2)) + "MB]" + "[" + str(round(float(大小 / 文件大小) * 100 , 2)) + "%" + "]" , end = "")
+        结束 = time.time()
+        print("耗时:" + str(结束 - 开始) + "s")
+        os.system(下载路径)
+        exit()
+
 
 
 # 下载QEMU
@@ -291,20 +336,25 @@ while 1:
 
 
         # 生成指令
-        名称 = input("启动文件名称:")
-        生成 = askdirectory(title = "选择保存位置")
-        生成 = 生成.replace("/","\\")
         指令 = (qemu路径 + "\\" + str(构架) + " -cpu " + str(型号) + str(设备) + " -smp " + str(核心) + " -m " + str(内存) + str(硬盘) + str(光驱) + str(软驱) + " -boot " + str(引导) + " -vga " + str(显卡) + str(设备树) + str(内核))
         指令 = 指令.replace("/","\\")
 
+        print("[1]直接运行指令(不保存) [2]保存")
+        temp = input()
+        选择 = int(temp)
+        if 选择 == 1:
+            os.system(指令)
+        
+        if 选择 == 2:
+            名称 = input("启动文件名称:")
+            生成 = askdirectory(title = "选择保存位置")
+            生成 = 生成.replace("/","\\")
+            with open(生成 + 名称 + 后辍,"w") as a:
+                    a.write(指令)
 
-        # 保存
-        with open(生成 + 名称 + 后辍,"w") as a:
-                a.write(指令)
-
-        运行 = tkinter.messagebox.askquestion(title = "是否运行生成的文件" , message = "是否运行生成的文件")
-        if 运行 == "yes":
-            os.system(生成 + "\\" + 名称 + 后辍)
+            运行 = tkinter.messagebox.askquestion(title = "是否运行生成的文件" , message = "是否运行生成的文件")
+            if 运行 == "yes":
+                os.system(生成 + "\\" + 名称 + 后辍)
 
 
     # 退出
