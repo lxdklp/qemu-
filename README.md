@@ -1,45 +1,67 @@
-<h2 align="center">qemu-cmd-generator</h2>
-<center>Easy to generate commands to start QEMU!</center>
+<h1 align="center">PyVM</h2>
+<center>A small QEMU virtual machine manager based on Python/PyQt.</center>
+<hr>
+<br>
 
-Hi! Are you still worried about studying QEMU commands? The project we are doing now allows you to easily use QEMU!
+This is a new project made by two students and now they are on the trail of developing Python, so this project may have some bugs... If you have some problem on using, send an [issue](https://github.com/lxdklp/PyVM/issues/new/) to report us abput that!
 
 And give us a star if this project really helped you!
 
 此文档亦提供[中文版本](#cn)
 
-### Run environment
+## Requests
 
-before run this project, you should configure the environment like this.
+We requests a environment before running like this:
 
-- Make sure you are already installed QEMU for Windows.
+|Configures    |Version
+|:--------------|:--------
+|QEMU          |No limit
+|Python        |3.x
+|System        |All Python supported systems
 
-- Make sure you are already installed Python and will recommend you to install the version 3.x.
+## Set up
 
+You can get our releases from [here](https://github.com/lxdklp/PyVM/releases).
 
->"所有版本"Just save all versions
+Choose right relase verion for your computer and download it.
 
-~~Google Translate~~
+Then unzip the zip archive and open something named "setup".
+
+We will test that if you download QEMU, if not, the setup will abort.
+
+(Document last edited)
 
 ---
 
 <div id="cn"></div>
 
-<h2 align="center">qemu-cmd-generator</h2>
-<center>这是一个可以方便的生成qemu启动文件的小程序！</center>
+<h1 align="center">PyVM</h2>
+<center>一个基于Python/PyQt的QEMU虚拟机管理器小作品。</center>
+<hr>
+<br>
 
-你还在担心QEMU命令使用有点麻烦吗？现在我们做的这个项目可以帮你轻轻松松使用QEMU！
+这是一个由两个学生制作的新项目，现在他们在Python的路上不断探索，因此该项目或多或少的会出一些错误...如果您在使用上遇到问题的话，请给我们发一个[issue](https://github.com/lxdklp/PyVM/issues/new/)让我们知晓！
 
-对了，如果这个项目真的有帮到你的话，记得点个Star！
+另外，如果这个项目对您有帮助，请给我们点个星星！
 
-### 运行环境
+## 要求
 
-在运行这个项目之前，你需要配置一下这个项目所需要的环境。
+在运行之前，需要配置这样的环境：
 
-- 确保你安装Windows版QEMU
+|配置  |版本
+|:----|:--
+|QEMU |无限制
+|Python |3.x
+|系统|所有受Python支持的系统
 
-- 确保已经安装并配置了Python。我们建议您使用3.x版本。
+## 设定
 
+您可以从[这里](https://github.com/lxdklp/PyVM/releases)获取我们的更新。
 
->"所有版本"仅做储存所有版本
+为您的计算机选择对应的发布版本并下载。
 
-~~我才不会告诉你嘤文版是谷歌生草机出来的~~
+然后解压缩zip存档，打开一个名为“setup”的文件。
+
+我们将测试是否下载QEMU，否则，安装将中止。
+
+（文件最后编辑至此处）
